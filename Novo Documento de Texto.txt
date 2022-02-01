@@ -1,0 +1,2 @@
+Texto
+Novo texto do arquivo de texto
