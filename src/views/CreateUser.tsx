@@ -1,12 +1,39 @@
 import { Button, TextField } from '@mui/material';
-import React from 'react';
+import { AxiosResponse } from 'axios';
+import { UserDTO } from 'dtos/UserDTO';
+import React, { useState } from 'react';
+import { NodeAPI } from 'services/Service';
 
 export default function CreateUser() {
+    const [name, setName] = useState<string>('');
+    const [email, setEmail] = useState<string>('');
+    const [password, setPassword] = useState<string>('');
+
+    async function createUserHandler() {
+        const userDTO = new UserDTO(name, email, password);
+
+        try{
+            const postResponse: AxiosResponse = await NodeAPI.post(`${process.env.REACT_APP_API_URL}/usuario`, userDTO);
+            console.log(postResponse)
+
+        }catch(error){
+            console.log(error)
+
+        }
+
+        console.log(userDTO)
+    };
+
+
+    // useEffect(() => {
+    //     console.log(`Nome: ${name}`);
+    //     console.log(`Email: ${email}`);
+    //     console.log(`Password: ${password}`);
+    // }, [name, email, password]);
 
     return (
         <div style={
             {
-                backgroundColor: 'red',
                 height: '500px',
                 display: 'flex',
                 justifyContent: 'center',
@@ -15,7 +42,6 @@ export default function CreateUser() {
         }>
             <div style={
                 {
-                    backgroundColor: 'green',
                     height: '90%',
                     width: '45%',
                     display: 'flex',
@@ -40,6 +66,7 @@ export default function CreateUser() {
                         justifyContent: 'center'
                     }}>
                         <TextField
+                            onChange={(event) => setName(event.target.value)}
                             label={'Nome do usuario'}
                             variant='outlined'
                             style={{
@@ -53,11 +80,12 @@ export default function CreateUser() {
                         justifyContent: 'center'
                     }}>
                         <TextField
+                            onChange={(event) => setEmail(event.target.value)}
                             label={'Email'}
                             variant='outlined'
-                            style={{ 
+                            style={{
                                 backgroundColor: 'white',
-                            width: '50%'
+                                width: '50%'
                             }} />
                     </div>
                     <div style={{
@@ -66,16 +94,17 @@ export default function CreateUser() {
                         justifyContent: 'center'
                     }}>
                         <TextField
-                        security=''
+                            security=''
                             label={'Senha'}
+                            type={"password"}
+                            onChange={(event) => setPassword(event.target.value)}
                             variant='outlined'
-                            style={{ 
+                            style={{
                                 backgroundColor: 'white',
                                 width: '50%',
-                                 }} />
+                            }} />
                     </div>
                     <div style={{
-                        backgroundColor: 'black',
                         display: 'flex',
                         justifyContent: 'center'
                     }}>
@@ -84,8 +113,9 @@ export default function CreateUser() {
                             style={{
                                 height: '50px',
                                 width: '100px',
-                                backgroundColor: 'blue'
-                            }}>
+                            }}
+                            onClick={createUserHandler}
+                        >
 
                             {'Criar'}
                         </Button>

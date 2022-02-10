@@ -3,7 +3,7 @@ import './App.css';
 import React, { useEffect, useState } from 'react';
 import { NodeAPI } from 'services/Service';
 import { AxiosResponse } from 'axios';
-import { WelcomeMessageDTO } from 'classes/WelcomeMenssageDTO';
+import { WelcomeMessageDTO } from 'dtos/WelcomeMenssageDTO';
 import CreateUser from 'views/CreateUser';
 
 function App() {
